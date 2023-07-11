@@ -1,0 +1,17 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">{{product!.name}}</h5>
+        <h6 class="card-subtitle mb-2 text-muted">{{price | currency}} {{discount | discountAmount}}</h6>
+        <p class="card-text">{{product!.description}}</p>
+        <a href="#" class="btn btn-link" (click)="onDetail($event)">details</a>
+    </div>
+    <div class="card-footer text-muted justify-content-end d-flex">
+        <div class="input-group add-form">
+            <input type="number" class="form-control" [formControl]="quantityInput" [class.is-invalid]="quantityInput.invalid">
+            <button class="btn btn-primary" type="button" (click)="onAdd()" [disabled]="quantityInput.invalid">Add</button>
+            <div class="invalid-feedback">
+                Min 0
+            </div>
+        </div>
+    </div>
+</div>

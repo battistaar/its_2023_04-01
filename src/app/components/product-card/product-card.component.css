@@ -1,0 +1,7 @@
+:host {
+    display: flex;
+}
+
+.add-form {
+    width: 150px;
+}

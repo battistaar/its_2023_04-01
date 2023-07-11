@@ -1,0 +1,29 @@
+<div class="container">
+    <a [routerLink]="['/products']"><- Back to search</a>
+    <div class="row mt-3" *ngIf="product$ | async as product">
+        <div class="col-6">
+            <div class="product-image-container">
+                <img class="product-image border rounded" src="assets/default-product-image.png">
+            </div>
+        </div>
+        <div class="col">
+            <h2>{{ product.name }}</h2>
+            <hr>
+            <div class="d-flex justify-content-between align-items-center">
+                <h4>{{price$ | async | currency}} {{(discount$ | async) ?? 0 | discountAmount}}</h4>
+
+                <div class="input-group mb-3 add-form">
+                    <input type="number" class="form-control" [formControl]="quantityInput" [class.is-invalid]="quantityInput.invalid">
+                    <button class="btn btn-primary" type="button" (click)="add(product)" [disabled]="quantityInput.invalid">Add</button>
+                    <div class="invalid-feedback">
+                        Min 0
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <p>
+                {{ product.description}}
+            </p>
+        </div>
+    </div>
+</div>

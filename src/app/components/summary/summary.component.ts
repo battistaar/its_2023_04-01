@@ -1,11 +1,12 @@
-import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnChanges, SimpleChanges } from '@angular/core';
 import { CartItem } from 'src/app/interfaces/cart-item';
-import { getDiscountedPrice, getFinalPrice, getTransportFee, getVatAmount } from 'src/utils/cart-utils';
+import { CartUtilsService } from 'src/app/services/cart-utils.service';
 
 @Component({
   selector: 'app-summary',
   templateUrl: './summary.component.html',
-  styleUrls: ['./summary.component.css']
+  styleUrls: ['./summary.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SummaryComponent implements OnChanges {
   protected _items: CartItem[] = [];
@@ -26,6 +27,8 @@ export class SummaryComponent implements OnChanges {
 
   summary = this.updateSummary();
 
+  constructor(private cartUtils: CartUtilsService) {}
+
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['items'] || changes['vat']) {
       this.summary = this.updateSummary();
@@ -33,25 +36,6 @@ export class SummaryComponent implements OnChanges {
   }
 
   private updateSummary() {
-    let summary = this._items.reduce((summ, item) => {
-      let discountedPrice = getDiscountedPrice(item.product.netPrice, item.product.discount) * item.quantity;
-      const vatAmount = getVatAmount(discountedPrice, this.vat);
-      const weight = item.product.weight * item.quantity;
-      const price = getFinalPrice(discountedPrice, this.vat);
-
-      return {
-        netTotal: summ.netTotal + discountedPrice,
-        totalVat: summ.totalVat +  vatAmount,
-        totalWeight: summ.totalWeight + weight,
-        totalPrice: summ.totalPrice + price
-      };
-    }, { netTotal: 0, totalVat: 0, totalWeight: 0, totalPrice: 0 });
-
-    const transportFee = getTransportFee(summary.totalWeight);
-
-    return {
-      ...summary,
-      transportFee
-    }
+    return this.cartUtils.getSummary(this._items, this.vat);
   }
 }

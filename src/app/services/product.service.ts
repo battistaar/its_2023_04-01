@@ -20,4 +20,8 @@ export class ProductService {
     const q = omitBy(filters, isNil);
     return this.http.get<Product[]>('/api/products', {params: q});
   }
+
+  get(id: string) {
+    return this.http.get<Product>(`/api/products/${id}`);
+  }
 }

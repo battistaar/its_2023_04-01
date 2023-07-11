@@ -22,12 +22,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
 
-    let country = 'IT';
-    // setInterval(() => {
-    //   country = country === 'IT' ? 'EN' : 'IT';
-    //   this.vatService.setCountry(country);
-    // }, 2000);
-
     this.updateQuantity$
       .pipe(
         takeUntil(this.destroyed$),

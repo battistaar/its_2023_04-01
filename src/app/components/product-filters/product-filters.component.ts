@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Subject, filter, takeUntil } from 'rxjs';
 import { ProductFilters } from 'src/app/services/product.service';
@@ -6,7 +6,8 @@ import { ProductFilters } from 'src/app/services/product.service';
 @Component({
   selector: 'app-product-filters',
   templateUrl: './product-filters.component.html',
-  styleUrls: ['./product-filters.component.css']
+  styleUrls: ['./product-filters.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ProductFiltersComponent implements OnInit, OnDestroy {
   filtersForm = this.fb.group({

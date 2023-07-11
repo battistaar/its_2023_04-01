@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { VatService } from './services/vat.service';
 
 
 @Component({
@@ -8,5 +9,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
+  constructor(protected varSrv: VatService) {
+    let country = 'IT';
+    this.varSrv.setCountry(country);
+  }
 }
 

@@ -16,6 +16,10 @@ import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductFiltersComponent } from './components/product-filters/product-filters.component';
+import { ProductCardComponent } from './components/product-card/product-card.component';
+import { SideCartComponent } from './components/side-cart/side-cart.component';
+import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
+import { ProductsContainerComponent } from './pages/products-container/products-container.component';
 registerLocaleData(localeIt);
 
 @NgModule({
@@ -26,7 +30,11 @@ registerLocaleData(localeIt);
     DiscountAmountPipe,
     CheckoutComponent,
     ProductsComponent,
-    ProductFiltersComponent
+    ProductFiltersComponent,
+    ProductCardComponent,
+    SideCartComponent,
+    ProductDetailComponent,
+    ProductsContainerComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +47,7 @@ registerLocaleData(localeIt);
   providers: [
    { provide: LOCALE_ID, useValue: 'it-IT' },
    { provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR'},
-   { provide: DEFAULT_VAT, useValue: 0.10},
+   { provide: DEFAULT_VAT, useValue: 0},
    CurrencyPipe
   ],
   bootstrap: [AppComponent]

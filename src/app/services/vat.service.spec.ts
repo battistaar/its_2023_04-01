@@ -1,12 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
-import { VatService } from './vat.service';
+import { DEFAULT_VAT, VatService } from './vat.service';
 
 describe('VatService', () => {
   let service: VatService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
+    TestBed.configureTestingModule({
+      providers: [
+        {provide: DEFAULT_VAT, useValue: 0}
+      ]
+    });
     service = TestBed.inject(VatService);
   });
 

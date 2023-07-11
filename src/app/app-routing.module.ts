@@ -4,6 +4,9 @@ import { CheckoutComponent } from "./pages/checkout/checkout.component";
 import { ProductsComponent } from "./pages/products/products.component";
 import { ProductFiltersResolver } from "./pages/products/product-filters.resolver";
 import { ProductsResolver } from "./pages/products/products.resolver";
+import { ProductsContainerComponent } from "./pages/products-container/products-container.component";
+import { ProductDetailComponent } from "./pages/product-detail/product-detail.component";
+import { ProductResolver } from "./pages/product-detail/product.resolver";
 
 const routes: Routes = [
   {
@@ -12,12 +15,25 @@ const routes: Routes = [
   },
   {
     path: 'products',
-    component: ProductsComponent,
-    resolve: {
-      filters: ProductFiltersResolver,
-      products: ProductsResolver
-    },
-    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+    component: ProductsContainerComponent,
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange',
+    children: [
+      {
+        path: '',
+        component: ProductsComponent,
+        resolve: {
+          filters: ProductFiltersResolver,
+          products: ProductsResolver
+        },
+      },
+      {
+        path: ':id',
+        component: ProductDetailComponent,
+        resolve: {
+          product: ProductResolver
+        }
+      }
+    ]
   },
   {
     path: '',
