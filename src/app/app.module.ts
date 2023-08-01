@@ -1,4 +1,4 @@
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { DEFAULT_CURRENCY_CODE, LOCALE_ID, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -20,6 +20,10 @@ import { ProductCardComponent } from './components/product-card/product-card.com
 import { SideCartComponent } from './components/side-cart/side-cart.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 import { ProductsContainerComponent } from './pages/products-container/products-container.component';
+import { LoginComponent } from './pages/login/login.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { IfAuthenticatedDirective } from './directives/if-authenticated.directive';
+import { NavUserComponent } from './components/nav-user/nav-user.component';
 registerLocaleData(localeIt);
 
 @NgModule({
@@ -34,7 +38,10 @@ registerLocaleData(localeIt);
     ProductCardComponent,
     SideCartComponent,
     ProductDetailComponent,
-    ProductsContainerComponent
+    ProductsContainerComponent,
+    LoginComponent,
+    IfAuthenticatedDirective,
+    NavUserComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +55,7 @@ registerLocaleData(localeIt);
    { provide: LOCALE_ID, useValue: 'it-IT' },
    { provide: DEFAULT_CURRENCY_CODE, useValue: 'EUR'},
    { provide: DEFAULT_VAT, useValue: 0},
+   { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
    CurrencyPipe
   ],
   bootstrap: [AppComponent]

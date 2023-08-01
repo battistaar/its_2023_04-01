@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, catchError, of } from 'rxjs';
 import { CartItem } from '../interfaces/cart-item';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,16 @@ export class CartSourceService {
   private _items$ = new BehaviorSubject<CartItem[]>([]);
   items$ = this._items$.asObservable();
 
-  constructor(private http: HttpClient) {
-    this.fetch();
+  constructor(private http: HttpClient,
+              private authSrv: AuthService) {
+    this.authSrv.currentUser$
+      .subscribe(user => {
+        if (user) {
+          this.fetch();
+        } else {
+          this._items$.next([]);
+        }
+      })
   }
 
   setQuantity(id: string, quantity: number) {
